@@ -1,3 +1,116 @@
+.main-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(26, 26, 46, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--secondary-color);
+  transform: translateY(0);
+  transition: transform 0.3s ease;
+  height: 60px;
+}
+
+.nav-hidden {
+  transform: translateY(-100%);
+}
+
+.nav-visible {
+  transform: translateY(0);
+}
+
+.nav-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  padding: 1rem 2rem;
+  gap: 3rem;
+  height: 100%;
+  align-items: center;
+}
+
+.nav-link {
+  font-family: 'Cinzel Decorative', cursive;
+  color: var(--text-color);
+  text-decoration: none;
+  font-size: 1.2rem;
+  padding: 0.5rem 1.5rem;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.nav-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--gold-gradient);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+  border-radius: 30px;
+}
+
+.nav-link:hover::before,
+.nav-link.active::before {
+  opacity: 0.1;
+}
+
+.nav-link i {
+  font-size: 1.3rem;
+  color: var(--secondary-color);
+  transition: transform 0.3s ease;
+}
+
+.nav-link:hover i,
+.nav-link.active i {
+  transform: scale(1.2);
+}
+
+.nav-link span {
+  position: relative;
+}
+
+.nav-link:hover span,
+.nav-link.active span {
+  text-shadow: 0 0 10px rgba(var(--secondary-color-rgb), 0.5);
+}
+
+@media screen and (max-width: 768px) {
+  .main-nav {
+    height: 50px;
+  }
+
+  .nav-content {
+    padding: 0.5rem 1rem;
+    gap: 1rem;
+  }
+
+  .nav-link {
+    font-size: 1rem;
+    padding: 0.4rem 1rem;
+  }
+
+  .nav-link i {
+    font-size: 1.1rem;
+  }
+
+  /* Ajustement pour éviter le chevauchement avec les titres */
+  .hero,
+  .hero-voodoo {
+    padding-top: calc(60px + 2rem);
+  }
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Grenze+Gotisch:wght@400;700&display=swap');
 
 :root {
@@ -1026,85 +1139,6 @@ p {
 h2, h3 {
   margin-bottom: 1.5rem;
   line-height: 1.4;
-}
-
-.main-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(10px);
-  z-index: 1000;
-  transition: transform 0.3s ease;
-}
-
-.nav-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1rem;
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-}
-
-.nav-link {
-  color: var(--text-color);
-  text-decoration: none;
-  font-size: 1.1rem;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.nav-link i {
-  font-size: 1.2rem;
-}
-
-.nav-link:hover,
-.nav-link.active {
-  background: rgba(255, 255, 255, 0.1);
-  color: var(--primary-color);
-}
-
-.nav-hidden {
-  transform: translateY(-100%);
-}
-
-.nav-visible {
-  transform: translateY(0);
-}
-
-/* Ajustements pour le responsive */
-@media screen and (max-width: 768px) {
-  .nav-content {
-    padding: 0.5rem;
-    gap: 1rem;
-  }
-
-  .nav-link {
-    font-size: 0.9rem;
-    padding: 0.4rem 0.8rem;
-  }
-
-  .nav-link i {
-    font-size: 1rem;
-  }
-
-  /* Ajout de margin-top aux sections avec des titres pour éviter le chevauchement */
-  .hero,
-  .hero-voodoo {
-    padding-top: calc(60px + 2rem) !important;
-  }
-
-  .concept-section,
-  .shop-section,
-  .contact-section {
-    margin-top: 2rem !important;
-  }
 }
 
 .services-section {

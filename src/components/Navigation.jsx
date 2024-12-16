@@ -3,19 +3,19 @@ import { useEffect, useState } from 'react';
 
 const Navigation = () => {
   const location = useLocation();
-  const [visible, setVisible] = useState(true);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
-      const currentScrollPos = window.scrollY;
+      const currentScrollPos = window.pageYOffset;
       setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
       setPrevScrollPos(currentScrollPos);
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [prevScrollPos]);
+  }, [prevScrollPos, visible]);
 
   return (
     <nav className={`main-nav ${visible ? 'nav-visible' : 'nav-hidden'}`}>
@@ -27,6 +27,10 @@ const Navigation = () => {
         <Link to="/voodoo" className={`nav-link ${location.pathname === '/voodoo' ? 'active' : ''}`}>
           <i className="fas fa-skull"></i>
           <span>Voodoo Projet</span>
+        </Link>
+        <Link to="/team" className={`nav-link ${location.pathname === '/team' ? 'active' : ''}`}>
+          <i className="fas fa-users"></i>
+          <span>Équipe</span>
         </Link>
       </div>
     </nav>

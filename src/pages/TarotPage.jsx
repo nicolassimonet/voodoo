@@ -125,23 +125,24 @@ const TarotPage = () => {
       <section className="concept-section">
         <div className="concept-content">
           <div className="concept-text">
-            <h2>Notre Concept</h2>
-            <p>Découvrez notre approche unique du coaching professionnel, combinant la sagesse du tarot avec une méthodologie structurée sur une seule page A4.</p>
+            <h2>Amulettes et Talismans</h2>
             
             <div className="concept-features">
               <div className="feature">
-                <h3>Vision Claire</h3>
-                <p>Un espace dédié en haut de page pour définir votre projet professionnel avec précision.</p>
+                <h3>Amulettes</h3>
+                <p>28€</p>
+                <p>Un objet magique de protection, chargé d'énergie protectrice pour son porteur.</p>
               </div>
               
               <div className="feature">
-                <h3>Guidance Mystique</h3>
-                <p>Trois cartes de tarot disposées horizontalement pour révéler les aspects clés de votre parcours.</p>
+                <h3>Talismans</h3>
+                <p>54€</p>
+                <p>Un talisman est actif et apporte un bénéfice spécifique : chance, prospérité ou réussite dans un domaine particulier.</p>
               </div>
               
               <div className="feature">
                 <h3>Sagesse Ancestrale</h3>
-                <p>Une rune viking soigneusement sélectionnée pour apporter une perspective unique à votre projet.</p>
+                <p>Les talismans sont chargés d'une intention particulière lors de rituels, d'invocations, ou de bénédictions. Ils sont imprégnés d'énergie cosmique ou spirituelle et doivent être activés.</p>
               </div>
               
               <div className="feature">

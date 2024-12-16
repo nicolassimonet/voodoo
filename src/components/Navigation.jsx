@@ -21,15 +21,12 @@ const Navigation = () => {
     <nav className={`main-nav ${visible ? 'nav-visible' : 'nav-hidden'}`}>
       <div className="nav-content">
         <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}>
-          <i className="fas fa-tarot"></i>
           <span>Ingeneria Support</span>
         </Link>
         <Link to="/voodoo" className={`nav-link ${location.pathname === '/voodoo' ? 'active' : ''}`}>
-          <i className="fas fa-skull"></i>
           <span>Voodoo Projet</span>
         </Link>
         <Link to="/team" className={`nav-link ${location.pathname === '/team' ? 'active' : ''}`}>
-          <i className="fas fa-users"></i>
           <span>Équipe</span>
         </Link>
       </div>

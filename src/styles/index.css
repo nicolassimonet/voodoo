@@ -2227,3 +2227,13 @@ h2, h3 {
     margin: 0.1rem !important;
   }
 }
+
+/* Responsive design pour le titre dans TarotPage */
+@media screen and (max-width: 768px) {
+  .hero-tarot h1 {
+    font-size: 2rem;
+    margin: 1rem 0;
+    padding: 0 1rem;
+    text-align: center;
+  }
+}

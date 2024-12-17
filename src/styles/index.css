@@ -1,5 +1,87 @@
-/* Styles généraux pour la page Tarot */
-.tarot-page {
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Grenze+Gotisch:wght@400;700&display=swap');
+
+:root {
+  --primary-color: #1a1a2e;
+  --secondary-color: #c0a080;
+  --accent-color: #8b0000;
+  --background-color: #0f0f1a;
+  --text-color: #e0e0e0;
+  --gold-gradient: linear-gradient(45deg, #c0a080, #ffd700, #c0a080);
+  --rune-gradient: linear-gradient(180deg, #2a2a3a, #1a1a2e);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  min-height: 100vh;
+}
+
+@keyframes floatAnimation {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes glowingBorder {
+  0% { box-shadow: 0 0 5px var(--secondary-color); }
+  50% { box-shadow: 0 0 20px var(--secondary-color); }
+  100% { box-shadow: 0 0 5px var(--secondary-color); }
+}
+
+@keyframes runeGlow {
+  0% { filter: drop-shadow(0 0 5px var(--secondary-color)); }
+  50% { filter: drop-shadow(0 0 15px var(--secondary-color)); }
+  100% { filter: drop-shadow(0 0 5px var(--secondary-color)); }
+}
+
+body {
+  font-family: 'Cinzel Decorative', serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  background-image: 
+    radial-gradient(circle at 50% 50%, rgba(32, 32, 50, 0.8) 0%, rgba(16, 16, 28, 0.8) 100%);
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 100vh;
+  line-height: 1.6;
+  letter-spacing: 0.3px;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Cinzel Decorative', cursive;
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-size: 4rem;
+  letter-spacing: 0.2em;
+  text-align: center;
+}
+
+h2 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.tarot-page, .voodoo-page {
   min-height: 100vh;
   padding: 2rem;
   position: relative;
@@ -9,87 +91,629 @@
   gap: 4rem;
 }
 
-/* Styles pour la section héro */
-.hero-tarot {
-  /* Styles de base */
-  min-height: 100vh;
+.voodoo-page {
+  padding-top: 4rem;
+}
+
+.hero {
+  position: relative;
+  height: 100vh;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+  text-align: center;
+  padding: 2rem;
+  margin: -2rem -2rem 0;
+  z-index: 1;
+}
+
+.hero-voodoo {
+  height: 60vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.hero h1 {
+  position: relative;
+  z-index: 2;
+  opacity: 1 !important;
+  animation: floatAnimation 6s ease-in-out infinite;
+  will-change: transform;
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 10px rgba(var(--secondary-color-rgb), 0.5);
+  transform: translateY(0);
+  transition: transform 0.3s ease;
+}
+
+.hero-voodoo h1 {
+  font-size: 4rem;
+  text-shadow: 0 0 20px rgba(var(--secondary-color-rgb), 0.5);
+}
+
+.hero h1:hover {
+  transform: translateY(-5px);
+}
+
+.project-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem;
+  background: rgba(26, 26, 46, 0.8);
+  border: 2px solid var(--secondary-color);
+  border-radius: 15px;
+  width: 100%;
+}
+
+.project-container {
+  margin-bottom: 3rem;
+}
+
+.project-container textarea {
+  width: 100%;
+  min-height: 150px;
+  margin: 1rem 0;
+  padding: 1.5rem;
+  background: rgba(15, 15, 26, 0.9);
+  border: 2px solid var(--secondary-color);
+  border-radius: 8px;
+  color: var(--text-color);
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.2rem;
+  resize: none;
+  transition: all 0.3s ease;
+}
+
+.project-container textarea:focus {
+  outline: none;
+  animation: glowingBorder 2s infinite;
+}
+
+.cards-section {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  margin: 3rem 0;
+  perspective: 1000px;
+  flex-wrap: wrap;
+}
+
+.card-slot {
+  width: 200px;
+  height: 350px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+  cursor: pointer;
+  margin: 1rem;
+}
+
+.card-slot::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--rune-gradient);
+  border: 3px solid var(--secondary-color);
+  border-radius: 15px;
+  transform: translateZ(-1px);
+  animation: glowingBorder 3s infinite;
+}
+
+.card-slot:hover {
+  transform: rotateY(180deg);
+}
+
+.rune-section {
+  display: flex;
+  justify-content: center;
+  margin: 3rem 0;
+}
+
+.rune-slot {
+  width: 150px;
+  height: 150px;
+  background: var(--rune-gradient);
+  border: 3px solid var(--secondary-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  animation: runeGlow 3s infinite;
+}
+
+.rune-slot::before {
+  content: '';
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: var(--gold-gradient);
+  opacity: 0.1;
+  filter: blur(8px);
+}
+
+.mantra-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 800px;
+  margin: 3rem auto;
+}
+
+.mantra-input {
+  padding: 1rem 1.5rem;
+  background: rgba(15, 15, 26, 0.9);
+  border: 2px solid var(--secondary-color);
+  border-radius: 8px;
+  color: var(--text-color);
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.mantra-input:focus {
+  outline: none;
+  animation: glowingBorder 2s infinite;
+}
+
+.booking-section {
+  max-width: 1400px;
+  margin: 4rem auto;
+  padding: 2rem;
+  background: rgba(26, 26, 46, 0.9);
+  border: 2px solid var(--secondary-color);
+  border-radius: 15px;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.booking-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.session-info {
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  border: 1px solid var(--secondary-color);
+}
+
+.session-info h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: var(--secondary-color);
+  text-align: left;
+  text-shadow: 0 0 10px rgba(var(--secondary-color-rgb), 0.3);
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  border: 1px solid var(--secondary-color);
+  transition: all 0.3s ease;
+}
+
+.info-item:hover {
+  transform: translateY(-2px);
+}
+
+.info-item i {
+  font-size: 1.5rem;
+  color: var(--secondary-color);
+}
+
+.info-item strong {
+  font-size: 1.1rem;
+  color: var(--secondary-color);
+}
+
+.info-item p {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: var(--text-color);
+  opacity: 0.9;
+  margin: 0;
+}
+
+.calendar-container {
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  border: 1px solid var(--secondary-color);
+}
+
+.calendar-container h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  color: var(--text-color);
+}
+
+.time-slots {
+  margin-top: 1rem;
+}
+
+.time-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 0.5rem;
+}
+
+.time-buttons button {
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--secondary-color);
+  border-radius: 6px;
+  color: var(--text-color);
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.time-buttons button:hover {
+  background: rgba(var(--secondary-color-rgb), 0.2);
+  transform: translateY(-1px);
+}
+
+.time-buttons button.selected {
+  background: var(--secondary-color);
+  color: var(--background-color);
+}
+
+.confirm-booking {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.8rem;
+  font-size: 1rem;
+  background: var(--secondary-color);
+  color: var(--background-color);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: 'Cinzel Decorative', serif;
+}
+
+.confirm-booking:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.1);
+}
+
+@media (max-width: 768px) {
+  .booking-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .session-info {
+    order: -1;
+  }
+}
+
+.contact-section {
+  padding: 4rem 2rem;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.1);
+  margin: 2rem;
+  border-radius: 15px;
+}
+
+.contact-section h2 {
+  color: var(--secondary-color);
+  margin-bottom: 1rem;
+}
+
+.contact-section p {
+  color: var(--text-color);
+  margin-bottom: 2rem;
+}
+
+.contact-form {
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--secondary-color);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-color);
+  font-size: 1rem;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2);
+}
+
+.submit-btn {
+  padding: 1rem 2rem;
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+}
+
+@media screen and (max-width: 768px) {
+  .contact-section {
+    margin: 1rem;
+    padding: 2rem 1rem;
+  }
+
+  .contact-form {
+    gap: 1rem;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    padding: 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  .submit-btn {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+  }
+}
+
+.contact-section {
+  max-width: 800px;
+  margin: 4rem auto;
+  padding: 3rem;
+  background: rgba(26, 26, 46, 0.8);
+  border: 2px solid var(--secondary-color);
+  border-radius: 15px;
+  width: 100%;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 1rem 1.5rem;
+  background: rgba(15, 15, 26, 0.9);
+  border: 2px solid var(--secondary-color);
+  border-radius: 8px;
+  color: var(--text-color);
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.contact-form textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: none;
+  animation: glowingBorder 2s infinite;
+}
+
+.contact-form button {
+  padding: 1rem 2rem;
+  background: var(--gold-gradient);
+  border: none;
+  border-radius: 8px;
+  color: var(--primary-color);
+  font-family: 'Cinzel Decorative', cursive;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 1rem;
   position: relative;
   overflow: hidden;
 }
 
-/* Styles pour les titres */
-.hero-tarot h1 {
-  /* Police et taille */
+.contact-form button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.contact-form button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+}
+
+.contact-form button:hover::after {
+  width: 300%;
+  height: 300%;
+}
+
+.model-section {
+  width: 100%;
+  height: 400px;
+  position: relative;
+  margin: 1rem 0;
+}
+
+.model-section canvas {
+  background: transparent;
+}
+
+.concept-section {
+  position: relative;
+  z-index: 1;
+  background: rgba(26, 26, 46, 0.8);
+  border: 2px solid var(--secondary-color);
+  border-radius: 15px;
+  padding: 3rem;
+  margin: 4rem 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.concept-content {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+.concept-text h2 {
   font-family: 'Cinzel Decorative', cursive;
-  font-size: 4rem;
-  color: #ffd700;
-  text-align: center;
-  /* Effets visuels */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  margin-bottom: 2rem;
-  /* Animation */
-  animation: glow 2s ease-in-out infinite alternate;
+  color: var(--secondary-color);
+  font-size: 2rem;
+  margin-bottom: 1rem;
 }
 
-/* Animation de brillance pour les titres */
-@keyframes glow {
-  from {
-    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #e60073, 0 0 20px #e60073;
-  }
-  to {
-    text-shadow: 0 0 10px #fff, 0 0 20px #ff4da6, 0 0 30px #ff4da6, 0 0 40px #ff4da6;
-  }
+.concept-text > p {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin-bottom: 1.5rem;
+  color: var(--text-color);
 }
 
-/* Media queries pour la responsivité */
-@media screen and (max-width: 768px) {
-  /* Ajustements pour les appareils mobiles */
-  .hero-tarot h1 {
-    font-size: 2rem;
-    margin: 1rem 0;
-    padding: 0 1rem;
-    text-align: center;
-  }
+.concept-features {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
 }
 
-/* Media queries pour la responsivité du titre dans TarotPage */
-@media screen and (max-width: 768px) {
-  .hero h1 {
-    font-size: 2.5rem;
-    padding: 0 1rem;
-  }
+.feature h3 {
+  font-family: 'Cinzel Decorative', cursive;
+  color: var(--secondary-color);
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
 }
 
-@media screen and (max-width: 480px) {
-  .hero h1 {
-    font-size: 2rem;
-    padding: 0 0.8rem;
-    letter-spacing: 0.1em;
-  }
+.feature p {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: var(--text-color);
 }
 
-@media screen and (max-width: 360px) {
-  .hero h1 {
-    font-size: 1.8rem;
-    padding: 0 0.5rem;
-    letter-spacing: 0.05em;
-  }
+.mini-template {
+  width: 100%;
+  max-width: 300px;
+  aspect-ratio: 1/1.414;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid var(--secondary-color);
+  border-radius: 10px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin: 0 auto;
 }
 
-@media screen and (max-width: 320px) {
-  .hero h1 {
-    font-size: 1.5rem;
-    padding: 0 0.3rem;
-    letter-spacing: normal;
-  }
+.mini-project-space {
+  height: 1%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--secondary-color);
+  border-radius: 5px;
+  transition: all 0.3s ease;
 }
 
-/* Styles pour les cartes de tarot */
+.mini-project-space:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.mini-cards {
+  display: flex;
+  justify-content: space-between;
+  height: 30%;
+  gap: 1rem;
+}
+
+.mini-card {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--secondary-color);
+  border-radius: 5px;
+}
+
+.mini-rune {
+  height: 15%;
+  width: 23%;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--secondary-color);
+  border-radius: 100%;
+  transition: all 0.3s ease;
+}
+
+.mini-rune:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.mini-mantras {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  height: 25%;
+  transition: all 0.3s ease;
+}
+
+.mini-mantras:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.mini-mantra {
+  height: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--secondary-color);
+  border-radius: 5px;
+}
+
 .tarot-cards-section {
   position: absolute;
   top: 0;
@@ -238,23 +862,217 @@
   }
 }
 
-/* Styles pour les composants de la page Voodoo */
-.voodoo-page {
-  padding-top: 4rem;
+.react-datepicker-wrapper {
+  width: 100%;
 }
 
-.voodoo-card {
-  background: rgba(26, 26, 46, 0.9);
-  border: 2px solid var(--secondary-color);
-  border-radius: 15px;
-  padding: 2rem;
-  transition: all 0.3s ease;
+.react-datepicker-popper {
+  width: max-content;
+}
+
+.react-datepicker {
+  font-family: 'Cinzel Decorative', serif !important;
+  background-color: transparent !important;
+  border: none !important;
+  color: var(--text-color) !important;
+  width: 100%;
+}
+
+.react-datepicker__month-container {
+  float: none;
+  width: 100%;
+}
+
+.react-datepicker__header {
+  background-color: transparent !important;
+  border-bottom: 1px solid var(--secondary-color) !important;
+  padding: 0.5rem !important;
+}
+
+.react-datepicker__current-month {
+  color: var(--secondary-color) !important;
+  font-size: 1.2rem !important;
+  font-family: 'Cinzel Decorative', cursive !important;
+}
+
+.react-datepicker__day-name {
+  color: var(--secondary-color) !important;
+  width: 2.5rem !important;
+  font-weight: bold;
+}
+
+.react-datepicker__day {
+  color: var(--text-color) !important;
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+  line-height: 2.5rem !important;
+  margin: 0.2rem !important;
+  font-size: 1rem !important;
+}
+
+.react-datepicker__day:hover {
+  background-color: rgba(192, 160, 128, 0.2) !important;
+  border-radius: 50% !important;
+}
+
+.react-datepicker__day--selected {
+  background-color: var(--secondary-color) !important;
+  border-radius: 50% !important;
+  color: var(--primary-color) !important;
+}
+
+.react-datepicker__day--disabled {
+  color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.react-datepicker__time-container {
+  border-left: 1px solid var(--secondary-color) !important;
+  width: 100px !important;
+}
+
+.react-datepicker__time-box {
+  width: 100% !important;
+}
+
+.react-datepicker__time-list-item {
+  height: 40px !important;
+  line-height: 40px !important;
+  background-color: transparent !important;
+  color: var(--text-color) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.react-datepicker__time-list-item:hover {
+  background-color: rgba(192, 160, 128, 0.2) !important;
+}
+
+.react-datepicker__time-list-item--selected {
+  background-color: var(--secondary-color) !important;
+  color: var(--primary-color) !important;
+}
+
+.date-time-picker {
+  display: none;
+}
+
+button, .button {
   position: relative;
   overflow: hidden;
+  transition: all 0.3s ease;
+  transform: translateY(0);
+}
+
+button:hover, .button:hover {
+  transform: translateY(-3px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
-.voodoo-card::before {
+button::after, .button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+}
+
+button:hover::after, .button:hover::after {
+  width: 300%;
+  height: 300%;
+}
+
+input, textarea {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus, textarea:focus {
+  border-color: var(--secondary-color);
+  box-shadow: 0 0 10px rgba(var(--secondary-color-rgb), 0.3);
+}
+
+.nav-link {
+  position: relative;
+  padding: 0.5rem 1rem;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--secondary-color);
+  transition: width 0.3s ease, left 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+  left: 0;
+}
+
+p {
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+  opacity: 0.9;
+}
+
+h2, h3 {
+  margin-bottom: 1.5rem;
+  line-height: 1.4;
+}
+
+.main-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(26, 26, 46, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--secondary-color);
+  transform: translateY(0);
+  transition: transform 0.3s ease;
+}
+
+.nav-hidden {
+  transform: translateY(-100%);
+}
+
+.nav-visible {
+  transform: translateY(0);
+}
+
+.nav-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  color: var(--text-color);
+  text-decoration: none;
+  font-size: 1.2rem;
+  padding: 0.5rem 1.5rem;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-link::before {
   content: '';
   position: absolute;
   top: 0;
@@ -264,400 +1082,51 @@
   background: var(--gold-gradient);
   opacity: 0;
   transition: opacity 0.3s ease;
-  z-index: 0;
+  z-index: -1;
+  border-radius: 30px;
 }
 
-.voodoo-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-}
-
-.voodoo-card:hover::before {
+.nav-link:hover::before,
+.nav-link.active::before {
   opacity: 0.1;
 }
 
-.voodoo-card > * {
+.nav-link i {
+  font-size: 1.3rem;
+  color: var(--secondary-color);
+  transition: transform 0.3s ease;
+}
+
+.nav-link:hover i,
+.nav-link.active i {
+  transform: scale(1.2);
+}
+
+.nav-link span {
   position: relative;
-  z-index: 1;
 }
 
-.voodoo-card h3 {
-  color: var(--secondary-color);
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-  text-align: center;
+.nav-link:hover span,
+.nav-link.active span {
+  text-shadow: 0 0 10px rgba(var(--secondary-color-rgb), 0.5);
 }
 
-.voodoo-card p {
-  font-size: 1.1rem;
-  line-height: 1.6;
-  margin-bottom: 1.5rem;
-  color: var(--text-color);
-}
+@media (max-width: 768px) {
+  .nav-content {
+    padding: 0.8rem;
+    gap: 1rem;
+  }
 
-.voodoo-card-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 1.5rem;
-  gap: 1rem;
-}
+  .nav-link {
+    font-size: 1rem;
+    padding: 0.4rem 1rem;
+  }
 
-.voodoo-card-price {
-  font-size: 1.4rem;
-  color: var(--secondary-color);
-  font-weight: bold;
-}
-
-/* Styles pour les composants de la page de réservation */
-.booking-section {
-  width: 100%;
-  max-width: 1200px;
-  margin: 4rem auto;
-  padding: 2rem;
-  box-sizing: border-box;
-}
-
-.booking-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  align-items: start;
-}
-
-.session-info,
-.calendar-container {
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-  padding: 1.5rem;
-  margin: 0;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  border: 1px solid var(--secondary-color);
-  backdrop-filter: blur(10px);
-}
-
-.session-info h2 {
-  font-size: 1.8rem;
-  margin-bottom: 1.5rem;
-  color: var(--secondary-color);
-  text-align: left;
-  text-shadow: 0 0 10px rgba(var(--secondary-color-rgb), 0.3);
-}
-
-.info-item {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  padding: 1rem;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  margin-bottom: 1rem;
-  border: 1px solid var(--secondary-color);
-  transition: all 0.3s ease;
-}
-
-.info-item:hover {
-  transform: translateY(-2px);
-}
-
-.info-item i {
-  font-size: 1.5rem;
-  color: var(--secondary-color);
-}
-
-.info-item strong {
-  font-size: 1.1rem;
-  color: var(--secondary-color);
-}
-
-.info-item p {
-  font-size: 0.9rem;
-  line-height: 1.4;
-  color: var(--text-color);
-  opacity: 0.9;
-  margin: 0;
-}
-
-.calendar-container h3 {
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-  text-align: center;
-  color: var(--text-color);
-}
-
-.time-buttons {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
-  margin-top: 2rem;
-}
-
-.time-buttons button {
-  width: 100%;
-  padding: 0.8rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--secondary-color);
-  border-radius: 8px;
-  color: var(--text-color);
-  font-size: 1rem;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.time-buttons button:hover {
-  background: rgba(var(--secondary-color-rgb), 0.1);
-  transform: translateY(-2px);
-}
-
-.time-buttons button.selected {
-  background: var(--secondary-color);
-  color: var(--background-color);
-}
-
-.confirm-booking {
-  display: block;
-  width: 100%;
-  max-width: 300px;
-  margin: 2rem auto 0;
-  padding: 1rem 2rem;
-  font-size: 1.1rem;
-  background: var(--secondary-color);
-  color: var(--background-color);
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 0.3s forwards;
-}
-
-@keyframes fadeInUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  .nav-link i {
+    font-size: 1.1rem;
   }
 }
 
-.confirm-booking:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-/* Styles pour les composants de la page de contact */
-.contact-section {
-  padding: 4rem 2rem;
-  text-align: center;
-  background: rgba(0, 0, 0, 0.1);
-  margin: 2rem;
-  border-radius: 15px;
-}
-
-.contact-section h2 {
-  color: var(--secondary-color);
-  margin-bottom: 1rem;
-}
-
-.contact-section p {
-  color: var(--text-color);
-  margin-bottom: 2rem;
-}
-
-.contact-form {
-  max-width: 600px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-}
-
-.form-group input,
-.form-group textarea {
-  padding: 1rem;
-  border-radius: 8px;
-  border: 1px solid var(--secondary-color);
-  background: rgba(255, 255, 255, 0.1);
-  color: var(--text-color);
-  font-size: 1rem;
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-  outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2);
-}
-
-.submit-btn {
-  padding: 1rem 2rem;
-  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-  border: none;
-  border-radius: 8px;
-  color: white;
-  font-size: 1.1rem;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.submit-btn:hover {
-  transform: translateY(-2px);
-}
-
-/* Styles pour les composants de la page de modèle */
-.model-section {
-  width: 100%;
-  height: 400px;
-  position: relative;
-  margin: 1rem 0;
-}
-
-.model-section canvas {
-  background: transparent;
-}
-
-/* Styles pour les composants de la page de concept */
-.concept-section {
-  position: relative;
-  z-index: 1;
-  background: rgba(26, 26, 46, 0.8);
-  border: 2px solid var(--secondary-color);
-  border-radius: 15px;
-  padding: 3rem;
-  margin: 4rem 2rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-}
-
-.concept-content {
-  max-width: 1000px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 2rem;
-  align-items: center;
-}
-
-.concept-text h2 {
-  font-family: 'Cinzel Decorative', cursive;
-  color: var(--secondary-color);
-  font-size: 2rem;
-  margin-bottom: 1rem;
-}
-
-.concept-text > p {
-  font-size: 0.9rem;
-  line-height: 1.4;
-  margin-bottom: 1.5rem;
-  color: var(--text-color);
-}
-
-.concept-features {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-}
-
-.feature h3 {
-  font-family: 'Cinzel Decorative', cursive;
-  color: var(--secondary-color);
-  font-size: 1.1rem;
-  margin-bottom: 0.5rem;
-}
-
-.feature p {
-  font-size: 0.9rem;
-  line-height: 1.4;
-  color: var(--text-color);
-}
-
-.mini-template {
-  width: 100%;
-  max-width: 300px;
-  aspect-ratio: 1/1.414;
-  background: rgba(255, 255, 255, 0.1);
-  border: 2px solid var(--secondary-color);
-  border-radius: 10px;
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  margin: 0 auto;
-}
-
-.mini-project-space {
-  height: 1%;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--secondary-color);
-  border-radius: 5px;
-  transition: all 0.3s ease;
-}
-
-.mini-project-space:hover {
-  background: rgba(255, 255, 255, 0.1);
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-.mini-cards {
-  display: flex;
-  justify-content: space-between;
-  height: 30%;
-  gap: 1rem;
-}
-
-.mini-card {
-  flex: 1;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--secondary-color);
-  border-radius: 5px;
-}
-
-.mini-rune {
-  height: 15%;
-  width: 23%;
-  margin: 0 auto;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--secondary-color);
-  border-radius: 100%;
-  transition: all 0.3s ease;
-}
-
-.mini-rune:hover {
-  background: rgba(255, 255, 255, 0.1);
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-.mini-mantras {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  height: 25%;
-  transition: all 0.3s ease;
-}
-
-.mini-mantras:hover {
-  background: rgba(255, 255, 255, 0.1);
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-.mini-mantra {
-  height: 100%;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--secondary-color);
-  border-radius: 5px;
-}
-
-/* Styles pour les composants de la page de services */
 .services-section {
   max-width: 1200px;
   margin: 4rem auto;
@@ -697,7 +1166,20 @@
   opacity: 0.9;
 }
 
-/* Styles pour les composants de la page de boutique */
+@media (max-width: 768px) {
+  .hero-voodoo h1 {
+    font-size: 2.5rem;
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .model-section {
+    height: 50vh;
+  }
+}
+
 .shop-section {
   max-width: 1200px;
   margin: 4rem auto;
@@ -772,9 +1254,9 @@
 
 .product-price {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  align-items: center;
+  margin-top: 1rem;
 }
 
 .product-price span {
@@ -798,71 +1280,13 @@
   transform: translateY(-2px);
 }
 
-/* Styles pour les composants de la page d'équipe */
-.team-section {
-  padding: 8rem 2rem 4rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.team-title {
-  text-align: center;
-  font-family: 'Cinzel Decorative', cursive;
-  font-size: 4rem;
-  margin-bottom: 3rem;
-  background: var(--gold-gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  text-shadow: 0 0 20px rgba(var(--secondary-color-rgb), 0.5);
-}
-
-.team-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
-  padding: 0 1rem;
-}
-
-.team-member {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--secondary-color);
-  border-radius: 12px;
-  padding: 2rem;
-  text-align: center;
-  transition: all 0.3s ease;
-  animation: fadeInUp 0.5s ease forwards;
-  opacity: 0;
-  backdrop-filter: blur(10px);
-}
-
-.team-member:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.member-content h2 {
-  color: var(--secondary-color);
-  font-size: 1.8rem;
-  margin-bottom: 0.5rem;
-  font-family: 'MedievalSharp', cursive;
-}
-
-.member-content p {
-  color: var(--text-color);
-  font-size: 1.1rem;
-  opacity: 0.9;
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
+@media (max-width: 768px) {
+  .products-grid {
+    grid-template-columns: 1fr;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  .product-image {
+    height: 250px;
   }
 }
 
@@ -999,13 +1423,29 @@
     gap: 0.5rem;
   }
 
-  .react-datepicker-wrapper {
-    width: 100%;
+  .time-slot {
+    padding: 0.5rem;
+    font-size: 0.9rem;
   }
 
-  .react-datepicker {
-    transform: scale(0.9);
-    transform-origin: top left;
+  .custom-datepicker {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  textarea {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .nav-link {
+    font-size: 1rem;
   }
 }
 
@@ -1040,13 +1480,28 @@
     gap: 0.8rem;
   }
 
-  .react-datepicker-wrapper {
-    width: 100%;
+  .time-slot {
+    padding: 0.8rem;
+    font-size: 1rem;
   }
 
-  .react-datepicker {
-    transform: scale(0.9);
-    transform-origin: top left;
+  .custom-datepicker {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  textarea {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .nav-links {
+    gap: 1.5rem;
+    padding: 1rem 2rem;
+  }
+
+  .nav-link {
+    font-size: 1.1rem;
   }
 }
 
@@ -1077,13 +1532,12 @@
     grid-template-columns: repeat(4, 1fr);
   }
 
-  .react-datepicker-wrapper {
-    width: 100%;
+  .custom-datepicker {
+    max-width: 360px;
   }
 
-  .react-datepicker {
-    transform: scale(0.9);
-    transform-origin: top left;
+  textarea {
+    max-width: 500px;
   }
 }
 
@@ -1200,36 +1654,163 @@
   }
 }
 
-@media screen and (max-width: 768px) {
-  .react-datepicker-popper {
-    width: calc(100vw - 4rem) !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-  }
+/* Team Page Styles */
+.team-section {
+  min-height: 100vh;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  margin: -2rem -2rem 0;
+}
 
-  .react-datepicker {
-    width: 100% !important;
-  }
+.team-hero {
+  height: 60vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding-top: 6rem;
+}
 
-  .react-datepicker__month-container {
-    float: none !important;
-    width: 100% !important;
-  }
+.team-title {
+  position: relative;
+  z-index: 2;
+  opacity: 1 !important;
+  animation: floatAnimation 6s ease-in-out infinite;
+  will-change: transform;
+  font-size: 4rem;
+  text-shadow: 0 0 10px rgba(192, 160, 128, 0.5);
+  transform: translateY(0);
+  transition: transform 0.3s ease;
+  text-align: center;
+}
 
-  .react-datepicker__day,
-  .react-datepicker__day-name {
-    width: 2rem !important;
-    line-height: 2rem !important;
-    margin: 0.1rem !important;
+.team-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem;
+  background: rgba(26, 26, 46, 0.8);
+  border: 2px solid var(--secondary-color);
+  border-radius: 15px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.team-member {
+  background: rgba(15, 15, 26, 0.9);
+  border: 2px solid var(--secondary-color);
+  border-radius: 8px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.team-member:hover {
+  animation: glowingBorder 2s infinite;
+  transform: translateY(-5px);
+}
+
+.member-content h2 {
+  font-size: 2.2rem;
+  margin: 0;
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  word-break: break-word;
+  hyphens: auto;
+}
+
+.member-content h3 {
+  font-family: 'Grenze Gotisch', cursive;
+  font-size: 1.8rem;
+  color: var(--text-color);
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 10px rgba(192, 160, 128, 0.3);
+}
+
+.member-content p {
+  font-family: 'Cinzel Decorative', serif;
+  color: var(--text-color);
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+
+.member-social {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.social-link {
+  color: var(--secondary-color);
+  font-size: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.social-link:hover {
+  color: var(--text-color);
+  transform: translateY(-3px);
+  animation: runeGlow 2s infinite;
+}
+
+@media (max-width: 1024px) {
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 2rem;
+    gap: 2rem;
   }
 }
 
-/* Responsive design pour le titre dans TarotPage */
-@media screen and (max-width: 768px) {
-  .hero-tarot h1 {
+@media (max-width: 768px) {
+  .team-section {
+    padding: 4rem 1.5rem 2rem;
+  }
+
+  .team-title {
+    font-size: 2.2rem;
+    letter-spacing: 0.1em;
+  }
+
+  .team-grid {
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+
+  .team-member {
+    min-height: 150px;
+  }
+
+  .member-content h2 {
     font-size: 2rem;
-    margin: 1rem 0;
-    padding: 0 1rem;
-    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .member-content h2 {
+    font-size: 1.8rem;
+  }
+
+  .member-content p {
+    font-size: 1rem;
+    line-height: 1.6;
   }
 }

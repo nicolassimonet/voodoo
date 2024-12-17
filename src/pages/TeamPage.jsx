@@ -1,5 +1,6 @@
 import React from 'react';
 import Navigation from '../components/Navigation';
+import Particles from '../components/Particles';
 
 const TeamPage = () => {
   const teamMembers = [
@@ -14,7 +15,10 @@ const TeamPage = () => {
     <div className="page-container">
       <Navigation />
       <div className="team-section">
-        <h1 className="team-title">Notre Équipe</h1>
+        <Particles />
+        <div className="team-hero">
+          <h1 className="team-title">Notre Équipe</h1>
+        </div>
         <div className="team-grid">
           {teamMembers.map((member, index) => (
             <div 

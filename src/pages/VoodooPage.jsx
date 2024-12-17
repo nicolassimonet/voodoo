@@ -1,3 +1,4 @@
+// Importation des dépendances React et composants
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Float } from '@react-three/drei';
 import { motion } from 'framer-motion';
@@ -5,10 +6,13 @@ import { Suspense, useState, useEffect } from 'react';
 import * as THREE from 'three';
 import Particles from '../components/Particles';
 
+// Composant principal de la page Voodoo
 function Triskel() {
+  // État pour la mise à l'échelle du triskel en fonction de la taille de l'écran
   const [scale, setScale] = useState(1.6);
 
   useEffect(() => {
+    // Fonction de gestion de la mise à l'échelle lors du redimensionnement de la fenêtre
     const handleResize = () => {
       if (window.innerWidth <= 480) {
         setScale(1.2);
@@ -19,17 +23,20 @@ function Triskel() {
       }
     };
 
+    // Initialisation de la mise à l'échelle et ajout de l'écouteur d'événement
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   return (
+    // Composant Float pour l'animation du triskel
     <Float
       speed={1}
       rotationIntensity={0.8}
       floatIntensity={1.5}
     >
+      {/* Groupe pour la mise à l'échelle du triskel */}
       <group scale={scale}>
         {/* Branches du triskel */}
         {[0, 1, 2].map((i) => (
@@ -93,6 +100,7 @@ function Triskel() {
   );
 }
 
+// Tableau de produits Voodoo
 const voodooProducts = [
   {
     id: 1,
@@ -120,20 +128,25 @@ const voodooProducts = [
   }
 ];
 
+// Composant pour une carte de produit
 function ProductCard({ product }) {
   return (
+    // Composant motion pour l'animation de la carte
     <motion.div
       className="product-card"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
+      {/* Image du produit */}
       <div className="product-image">
         <img src={product.image} alt={product.name} />
       </div>
+      {/* Informations du produit */}
       <div className="product-info">
         <h3>{product.name}</h3>
         <p>{product.description}</p>
+        {/* Prix et bouton d'ajout au panier */}
         <div className="product-price">
           <span>{product.price}€</span>
           <button>Ajouter au panier</button>
@@ -143,29 +156,41 @@ function ProductCard({ product }) {
   );
 }
 
+// Composant principal de la page Voodoo
 function VoodooPage() {
   return (
+    // Conteneur principal de la page
     <div className="voodoo-page">
+      {/* Particules en arrière-plan */}
       <Particles />
       
+      {/* Section héro avec titre */}
       <section className="hero-voodoo">
         <h1>Boutique Voodoo</h1>
       </section>
 
+      {/* Section de présentation du modèle 3D */}
       <section className="model-section">
-        <Canvas camera={{ position: [0, 0, 3.5] }}>  {/* Rapproché de 4 à 3.5 pour le triskel plus petit */}
+        {/* Canvas pour le rendu du modèle 3D */}
+        <Canvas camera={{ position: [0, 0, 3.5] }}>  
+          {/* Lumière ambiante */}
           <ambientLight intensity={0.2} />
+          {/* Lumière ponctuelle */}
           <pointLight position={[0, 0, 2]} intensity={1} color="#FFD700" />
+          {/* Composant de suspension pour le chargement du modèle */}
           <Suspense fallback={null}>
             <Triskel />
           </Suspense>
+          {/* Contrôles d'orbite pour la navigation dans le modèle */}
           <OrbitControls enableZoom={false} />
         </Canvas>
       </section>
 
+      {/* Section de présentation des produits */}
       <section className="shop-section">
         <h2>Nos Poupées Voodoo</h2>
         <p>Chaque poupée est unique, fabriquée à la main avec des matériaux soigneusement sélectionnés.</p>
+        {/* Grille de produits */}
         <div className="products-grid">
           {voodooProducts.map(product => (
             <ProductCard key={product.id} product={product} />
@@ -173,10 +198,12 @@ function VoodooPage() {
         </div>
       </section>
 
+      {/* Section de contact */}
       <section className="contact-section">
         <h2>Contactez-nous</h2>
         <p>Pour toute question sur nos services ou produits</p>
         
+        {/* Formulaire de contact */}
         <form className="contact-form">
           <div className="form-group">
             <input type="text" placeholder="Votre nom" required />

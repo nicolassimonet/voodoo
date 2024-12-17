@@ -1,3 +1,4 @@
+// Importation des dépendances React nécessaires
 import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -8,15 +9,22 @@ import { registerLocale, setDefaultLocale } from 'react-datepicker'
 import fr from 'date-fns/locale/fr'
 import AnimatedTarotCards from '../components/AnimatedTarotCards'
 
+// Importation des plugins GSAP nécessaires
 gsap.registerPlugin(ScrollTrigger)
 registerLocale('fr', fr)
 setDefaultLocale('fr')
 
+// Composant principal de la page Tarot
 const TarotPage = () => {
+  // Référence pour le conteneur principal
   const containerRef = useRef(null)
+  // Référence pour le titre principal
   const titleRef = useRef(null)
+  
+  // États pour gérer les dates et heures sélectionnées
   const [selectedDate, setSelectedDate] = useState(null)
   const [selectedTime, setSelectedTime] = useState(null)
+  // État pour gérer l'échelle d'animation
   const [animationScale, setAnimationScale] = useState(1)
 
   // Fonction pour filtrer les dates disponibles
@@ -27,6 +35,7 @@ const TarotPage = () => {
     return date > currentDate
   }
 
+  // Fonction pour générer les créneaux horaires
   const generateTimeSlots = () => {
     const timeSlots = []
     for (let hour = 10; hour <= 17; hour++) {
@@ -38,15 +47,19 @@ const TarotPage = () => {
     return timeSlots
   }
 
+  // Gestionnaire pour le changement de date
   const handleDateChange = (date) => {
     setSelectedDate(date)
   }
 
+  // Gestionnaire pour la sélection de l'heure
   const handleTimeSelection = (time) => {
     setSelectedTime(time)
   }
 
+  // Effet pour gérer les animations et les événements de défilement
   useEffect(() => {
+    // Gestionnaire pour le redimensionnement de la fenêtre
     const handleResize = () => {
       if (window.innerWidth <= 480) {
         setAnimationScale(0.5);
@@ -60,6 +73,7 @@ const TarotPage = () => {
     handleResize();
     window.addEventListener('resize', handleResize);
 
+    // Contexte GSAP pour les animations
     const ctx = gsap.context(() => {
       // Animation des sections adaptative
       gsap.from('.concept-section', {
@@ -104,6 +118,7 @@ const TarotPage = () => {
       });
     }, containerRef);
 
+    // Nettoyage des événements et du contexte GSAP
     return () => {
       window.removeEventListener('resize', handleResize);
       ctx.revert();
@@ -112,16 +127,20 @@ const TarotPage = () => {
 
   return (
     <div className="tarot-page" ref={containerRef}>
+      {/* Composant de particules */}
       <Particles />
       
+      {/* Section héro avec le titre principal */}
       <section className="hero">
         <h1 ref={titleRef}>
           Ingeneria Support
         </h1>
       </section>
 
+      {/* Section des cartes de tarot animées */}
       <AnimatedTarotCards />
 
+      {/* Section de présentation du concept */}
       <section className="concept-section">
         <div className="concept-content">
           <div className="concept-text">
@@ -173,6 +192,7 @@ const TarotPage = () => {
         </div>
       </section>
 
+      {/* Section de réservation */}
       <section className="booking-section">
         <div className="booking-content">
           <div className="session-info">
